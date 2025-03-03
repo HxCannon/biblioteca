@@ -1,1 +1,59 @@
-Hola, ejemplo
+<!DOCTYPE html>
+<html>
+<head>
+<title>Pagina Interactiva</title>
+</head>
+<body>
+
+<div id="selector-juegos">
+    <button data-juego="juego1">Juego 1</button>
+    <button data-juego="juego2">Juego 2</button>
+</div>
+<div id="opciones-secundarias" style="display: none;">
+    <div id="opciones-juego1" style="display: none;">
+        <button data-consola="consola1">Consola 1</button>
+        <button data-consola="consola2">Consola 2</button>
+    </div>
+    <div id="opciones-juego2" style="display: none;">
+        <button data-consola="consola3">Consola 3</button>
+    </div>
+    <button id="ver-guia" style="display: none;">VER GUÍA</button>
+</div>
+
+<script>
+    const selectorJuegos = document.getElementById('selector-juegos');
+    const opcionesSecundarias = document.getElementById('opciones-secundarias');
+    const opcionesJuego1 = document.getElementById('opciones-juego1');
+    const opcionesJuego2 = document.getElementById('opciones-juego2');
+    const verGuia = document.getElementById('ver-guia');
+    let juegoSeleccionado = null;
+    let consolaSeleccionada = null;
+    selectorJuegos.addEventListener('click', (event) => {
+        if (event.target.tagName === 'BUTTON') {
+            juegoSeleccionado = event.target.dataset.juego;
+            opcionesSecundarias.style.display = 'block';
+            if (juegoSeleccionado === 'juego1') {
+                opcionesJuego1.style.display = 'block';
+                opcionesJuego2.style.display = 'none';
+            } else if (juegoSeleccionado === 'juego2') {
+                opcionesJuego1.style.display = 'none';
+                opcionesJuego2.style.display = 'block';
+            }
+        }
+    });
+    opcionesSecundarias.addEventListener('click', (event) => {
+        if (event.target.tagName === 'BUTTON' && event.target.dataset.consola) {
+            consolaSeleccionada = event.target.dataset.consola;
+            verGuia.style.display = 'block';
+        }
+    });
+    verGuia.addEventListener('click', () => {
+        if (juegoSeleccionado && consolaSeleccionada) {
+            // Redirige a la página de la guía correspondiente
+            window.location.href = `/ruta/a/${juegoSeleccionado}/${consolaSeleccionada}`;
+        }
+    });
+</script>
+
+</body>
+</html>
